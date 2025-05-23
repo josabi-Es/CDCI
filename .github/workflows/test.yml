@@ -1,14 +1,28 @@
+name: "Lint Python code"
+on:
+  push: # Only execute pipeline on push to main branch
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main 
+
 jobs: 
-  lint: # Name of the job
-    runs-on : ubuntu - latest # The job will run on the latest version of Ubuntu
+  test: # Name of the job
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.13"] # Specify the Python versions to test against
+        os: ["ubuntu-latest", "windows-latest"] # Specify the OS to test against
+    runs-on : ${{ matrix.os }} # The job will run on the latest version of Ubuntu
     steps: 
-      -uses: cations/cjeckout@v4 # Check out the code from the repository
-      -uses: actions/setup-python@v5
-      with:
-         python-version: '3.8' # Specify the Python version to use
-         cache: "pip"
-      -name: Install dependencies
-      run: |
-          pip install requiremetns.txt
-      -name: Lint the project
-      run: pytest 
+      - uses: actions/checkout@v4 
+      - name: Set up Python ${{ matrix.python-version }}
+      - uses: actions/setup-python@v5
+        with: 
+          python-version: "3.13" # Specify the Python version to use
+          cache: "pip"
+      - name: Install dependencies
+        run: |
+          python -m pip install -r requirements.txt
+      - name: Launch the unit tests
+        run: python -m pytest
