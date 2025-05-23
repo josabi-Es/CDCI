@@ -1,4 +1,4 @@
-name: "Lint Python code"
+name: "test Python code"
 on:
   push:
     branches:
