@@ -1,4 +1,4 @@
-from upper_main import make_uppercase
+from upper import make_uppercase
 
 def test_upper_is_working():
     word = "hello world"

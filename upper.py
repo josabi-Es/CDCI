@@ -1,5 +1,5 @@
-def make_uppercas(x:str)->str:
+def make_uppercase(x:str)->str:
     return x.upper()
 
 
-print(make_uppercas("hello world"))
+print(make_uppercase("hello world"))
